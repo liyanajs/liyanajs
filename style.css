@@ -13,6 +13,17 @@ h1, h2 {
     text-align: center;
 }
 
+.welcome {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* center vertically */
+    align-items: center;       /* center horizontally */
+    padding: 0 2rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
 .welcome h1 {
     font-size: 9rem;
     margin-bottom:0;
@@ -34,7 +45,7 @@ h1, h2 {
 
 .welcome h2 {
     font-size: 1.5rem;
-font-family:  sans-serif;
+    margin-top: 0;
 }
 
 @keyframes gradient{
@@ -43,8 +54,8 @@ font-family:  sans-serif;
     text-indent: -20px;
   }
   50%{
-    letter-spacing: 50px;
-    text-indent: 50px;    
+    letter-spacing: 40px;
+    text-indent: 40px;    
   }
   
   100%{
@@ -54,16 +65,30 @@ font-family:  sans-serif;
   
 }
 
+@keyframes gradientMobile {
+  0%{
+    letter-spacing: -10px;
+    text-indent: -10px;
+  }
+  50%{
+    letter-spacing: 20px;
+    text-indent: 20px;    
+  }
+  100%{
+    letter-spacing: -6px;
+    text-indent: -6px;    
+  }
+}
+
 .options {
     width: 100%;
-    min-width: 100vh;
+    min-height: 100vh;
     box-sizing: border-box;
     padding: 50px 20px;
-
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 100px;
+    gap: 80px;
     align-items: flex-end;
 }
 
@@ -74,11 +99,24 @@ font-family:  sans-serif;
     font-size: 0.9rem;
     line-height: 1.6;
     margin-bottom: 20px; /* Lifts it up slightly from the very bottom edge */
+    animation: fadeIn 1.2s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .description h3 {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.9rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
     letter-spacing: 2px;
     margin-bottom: 20px;
     font-weight: bolder;
@@ -117,7 +155,7 @@ font-family:  sans-serif;
 
 .description p {
     max-width: 600px; 
-    font-family: 'Manrope', sans-serif;    
+    font-family: 'Montserrat', sans-serif;    
     font-size: 1rem;
     line-height: 1.6;
     margin: 0 auto; /* Centers the block */
@@ -458,11 +496,50 @@ footer p {
 
 
 @media (max-width: 768px) {
-    .left-panel {
-        display: none;
+    body {
+        padding: 0 1.5rem; /* add a bit of side breathing room */
     }
 
-     .about-section {
+    .welcome {
+        padding: 0 1.5rem;
+    }
+
+    .welcome h1 {
+        /* Scale WELCOME responsively, no more fixed 9rem */
+        font-size: clamp(3rem, 18vw, 4.8rem);
+        letter-spacing: -6px; /* softer tracking so it fits */
+        animation: gradientMobile 2.4s 1 ease-in-out forwards;
+        animation-delay: 0.6s;
+    }
+
+    .welcome h2 {
+        font-size: 1rem;
+        line-height: 1.4;
+        margin-top: 0.75rem;
+    }
+
+    .typewriter {
+        border-right-width: 2px;
+        font-size: inherit;
+        max-width: 100%;
+        white-space: nowrap;
+    }
+
+    .left-panel {
+        display: block; 
+        position: fixed;
+        top: auto;
+        left: auto;
+        width: auto;
+        height: auto;
+        padding-top: 0;
+        background: transparent;
+        bottom: 20px;
+        right: 20px;
+        z-index: 2000;
+    }
+
+    .about-section {
         flex-direction: column-reverse;
         align-items: center;
         padding-top: 150px;
@@ -507,7 +584,8 @@ footer p {
         padding-right: 5%;
     }
 
-   .contact-section {
+    /* CONTACT PAGE */
+    .contact-section {
         /* 1. Reset padding (Remove the 300px desktop shift) */
         padding-left: 5%; 
         padding-right: 5%;
@@ -519,15 +597,15 @@ footer p {
         text-align: center; /* Center the text */
     }
 
-   .contact-section h1 {
-    font-weight: 800; 
-    font-size: 6rem; 
-    letter-spacing: -3px; 
-    line-height: 0.9;
-    margin-bottom: 20px;
-    text-align: left;
-    gap:0;
-}
+    .contact-section h1 {
+        font-weight: 800; 
+        font-size: 6rem; 
+        letter-spacing: -3px; 
+        line-height: 0.9;
+        margin-bottom: 20px;
+        text-align: left;
+        gap:0;
+    }
 
    .phone-img {
         position: relative; 
@@ -539,6 +617,7 @@ footer p {
         margin-bottom: 20px;
     }
 
+    /* WORK PAGE */
     .work-text {
         bottom: 20vh; 
         left: 8vw;  
@@ -552,4 +631,34 @@ footer p {
         height: 100%;
         object-fit: cover;
     }
+
+   .options {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 40px 20px;
+        gap: 32px;
+        min-height: auto;    /* let content define height */
+        width: 100%;
+    }
+
+    .description {
+        width: 100%;
+        max-width: 100%;
+        text-align: left;
+        margin-bottom: 0;
+    }
+
+    .options ul {
+        width: 100%;
+        text-align: left;
+        font-size: clamp(2.5rem, 10vw, 3.5rem);  /* scales nicely on phones */
+        line-height: 1.05;
+    }
+
+    .options li {
+        transform: none;
+        margin-bottom: 8px;
+    }
+     
 }
