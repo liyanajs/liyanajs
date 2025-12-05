@@ -57,6 +57,79 @@ body.inverted .typewriter {
     );
 }
 
+/* === WORK PAGE LAYOUT FIX === */
+/* Reset layout for Work page only */
+html.work-page,
+body.work-page {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;   /* prevents the side gaps on mobile */
+}
+
+body.work-page {
+    /* cancel the global flex centering on this page */
+    display: block;
+}
+
+/* full-screen hero area for Work page */
+body.work-page .work-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* Work heading on the left bottom */
+body.work-page .work-text {
+    position: absolute;
+    bottom: 5vh;
+    left: 10vw;
+    z-index: 2;
+    text-align: left;
+}
+
+body.work-page .work-text h1 {
+    font-weight: 800;
+    font-size: 10vw;
+    letter-spacing: -3px;
+    line-height: 0.9;
+    margin: 0;
+    color: #6B7308;
+}
+
+/* Roadside image on the right */
+body.work-page .road-img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40vw;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* Centered scroll indicator, visible ~5s */
+body.work-page .scroll-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 3;
+    opacity: 1;
+    pointer-events: none;
+    /* wait 5s, then fade out */
+    animation: scrollFadeOut 0.6s ease-out 5s forwards;
+}
+
+
 .work-cards {
     position: relative;
     z-index: 2;           /* ABOVE stripes */
@@ -107,6 +180,82 @@ body.inverted .typewriter {
     line-height: 1.6;
     font-size: 0.95rem;
     color: #444;
+}
+
+.scroll-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 3;              /* above Work text + image */
+    opacity: 1;
+    pointer-events: none;    /* don't block clicks/scroll */
+    animation: scrollFadeOut 0.6s ease-out 2s forwards;
+}
+
+.scroll-mouse {
+    width: 40px;
+    height: 64px;
+    border-radius: 999px;
+    border: 2px solid #6B7308;   /* dark olive outline */
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+    box-sizing: border-box;
+}
+
+.scroll-wheel {
+    width: 8px;
+    height: 15px;
+    border-radius: 999px;
+    background-color: #6B7308;   /* dark olive */
+    animation: scrollWheel 1s ease-in-out infinite;
+}
+
+
+.scroll-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6B7308;              /* dark olive */
+}
+
+@keyframes scrollWheel {
+    0% {
+        transform: translateY(-6px);
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+}
+
+/* Fade the whole indicator out after 2s */
+@keyframes scrollFadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* Optional: respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-indicator {
+        animation: none;
+        opacity: 0;            /* or 1 if you still want it static */
+    }
+    .scroll-wheel {
+        animation: none;
+    }
 }
 
 h1, h2 {
@@ -425,18 +574,7 @@ h1, h2 {
     margin: -6px -16px; /* Compensate for padding so layout doesn't jump */
 }
 
-.work-section{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: justify;
-    align-items: center;
-    padding-top: 180px; 
-    padding-left: 5%;
-    padding-right: 5%;
-    box-sizing: border-box;
-    width: 100%;    
-}
+
 
 /* 1. The Left Panel Container */
 .left-panel {
@@ -568,41 +706,6 @@ footer p {
     color: #6B7308;
 }
 
-/* WORK */
-.work-section {
-    width: 100%;
-    height:100vh;
-    overflow:hidden;
-}
-
-.work-text {
-    position: absolute;
-    bottom: 5vh; 
-    left: 10vw;  
-    z-index: 2;
-    text-align: left;
-}
-
-.work-text h1 {
-    font-weight: 800; 
-    font-size: 10vw;
-    letter-spacing: -3px; 
-    line-height: 0.9;
-    margin: 0;    
-    color: #6B7308;
-}
-
-.road-img {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 40vw; 
-    height: 100%; 
-    object-fit: cover;
-    z-index: 1;
-}
-
-
 @media (max-width: 768px) {
     body {
         padding: 0 1.5rem; /* add a bit of side breathing room */
@@ -726,18 +829,88 @@ footer p {
     }
 
     /* WORK PAGE */
-    .work-text {
+    /* body.work-page .work-text {
         bottom: 20vh; 
         left: 8vw;  
     }
 
-    .road-img {
+    body.work-page.road-img {
         position: absolute;
         right: 0;
         top: 0;
         width: 100vw; 
         height: 100%;
         object-fit: cover;
+    } */
+
+    /* --- WORK PAGE FIXES (Mobile) --- */
+    
+    /* 1. Force the container to be full screen height */
+    body.work-page .work-section {
+        height: 100vh;       /* Fill the phone screen */
+        width: 100%;
+        position: relative;
+        overflow: hidden;    /* Cut off overflowing image parts */
+        padding: 0;          /* Remove padding so image touches edges */
+    }
+
+    /* 2. Fix the Road Image (No more cropping) */
+    body.work-page .road-img {
+        position: absolute;
+        top: 0;
+        right: -20%;         /* Pull it slightly right so the curve sits nicely */
+        
+        height: 100%;        /* CRITICAL: Force it to touch bottom of screen */
+        width: auto;         /* Let width calculate automatically */
+        min-width: 120%;     /* Ensure it's wide enough to cover the right side */
+        
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    /* 3. Fix the Text Position */
+    body.work-page .work-text {
+        position: absolute;
+        bottom: 15%;         /* Adjust height to match your screenshot */
+        left: 30px;          /* Keep it on the left */
+        z-index: 2;          /* Ensure it sits ON TOP of the image */
+        text-align: left;
+    }
+    
+    body.work-page .work-text h1 {
+        font-size: 4rem;   /* Big readable text */
+        color: #6B7308;
+        margin: 0;
+        line-height: 1;
+    }
+
+    /* 4. Hide Scroll Indicator on Mobile (Optional) */
+    /* Usually animations annoy mobile users, uncomment if you want to hide it */
+    /* .scroll-indicator { display: none; } */
+
+    body.work-page .scroll-indicator {
+        /* 1. Reset Desktop Centering */
+        top: auto;
+        transform: none;
+        
+        /* 2. Horizontal Alignment (Match Work Text) */
+        left: 40px; 
+        align-items: flex-start; /* Aligns the mouse icon to the left */
+        
+        /* 3. Vertical Position (Above the Text) */
+        /* Your text is at bottom: 25%. 
+           We add extra % to clear the text height + 10px gap */
+        bottom: 25%; 
+        
+        /* 4. Make sure it stays visible long enough to see */
+        animation: scrollFadeOut 0.6s ease-out 4s forwards;
+    }
+    
+    /* Optional: Scale it down slightly for mobile */
+    .scroll-mouse {
+        width: 30px;
+        height: 48px;
+        border-width: 1.5px;
     }
 
    .options {
@@ -782,3 +955,4 @@ footer p {
     }
      
 }
+
